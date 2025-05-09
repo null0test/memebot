@@ -24,15 +24,14 @@ client.on('messageCreate', (message) => {
 
     if (message.content === '!fuck you') {
         message.reply('fuck you too bitch!');
-
     }
 
     if (message.content === '!meme') {
-        meme();
+        meme(message);
     }
 });
 
-function meme() {
+function meme(message) {
     const requestOptions = {
         method: 'GET'
     };
@@ -41,16 +40,14 @@ function meme() {
             return response.json();
         })
         .then((data) => {
-            processResponse(data);
+            processResponse(data, message);
         })
         .catch((e) => {
             console.error(e);
         });
 }
 
-function processResponse(resp) {
-    
+function processResponse(resp, message) {
     const lastPreview = resp.preview[resp.preview.length - 1];
-    
     message.reply(lastPreview);
 }
